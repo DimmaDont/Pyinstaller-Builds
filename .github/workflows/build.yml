@@ -16,12 +16,9 @@ jobs:
       run:
         shell: msys2 {0}
 
-    concurrency:
-       group: ${{ github.workflow }}-${{ github.ref }}
-
     steps:
       - name: Set up MinGW
-        uses: yt-dlp/setup-msys2@v2
+        uses: msys2/setup-msys2@v2
         with:
           update: true
           msystem: ${{matrix.sys}}
@@ -48,7 +45,7 @@ jobs:
           python setup.py sdist bdist_wheel
 
       - name: Deploy
-        uses: yt-dlp/actions-gh-pages@v4
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
